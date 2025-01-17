@@ -1,10 +1,13 @@
 package am.azaryan.eLearning.service.impl;
 
+import am.azaryan.eLearning.exceptions.ErrorResponse;
+import am.azaryan.eLearning.exceptions.RecordNotFoundException;
 import am.azaryan.eLearning.mapper.UserMapper;
 import am.azaryan.eLearning.dto.userMapper.CreateUserRequestDto;
 import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
 import am.azaryan.eLearning.entity.user.User;
 import am.azaryan.eLearning.repository.UserRepository;
+import am.azaryan.eLearning.response.Response;
 import am.azaryan.eLearning.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -22,8 +25,9 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public UserResponseDto getUserById(int id) {
-        return userMapper.userToUserResponse(userRepository.getReferenceById(id));
+    public Response<ErrorResponse,UserResponseDto> getUserById(int id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("User is not found with id : " + id));
+        return new Response<>(null, userMapper.userToUserResponse(user), UserResponseDto.class.getSimpleName());
     }
 
     @Override

@@ -2,6 +2,8 @@ package am.azaryan.eLearning.endpoint;
 
 import am.azaryan.eLearning.dto.userMapper.CreateUserRequestDto;
 import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
+import am.azaryan.eLearning.exceptions.ErrorResponse;
+import am.azaryan.eLearning.response.Response;
 import am.azaryan.eLearning.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -24,12 +26,9 @@ public class UserEndpoint {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable int id) {
-        UserResponseDto userResponseDto = userService.getUserById(id);
-        if (userResponseDto == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(userResponseDto);
+    public ResponseEntity<Response<ErrorResponse,UserResponseDto>> getUserById(@PathVariable int id) {
+        Response<ErrorResponse,UserResponseDto> userById = userService.getUserById(id);
+        return ResponseEntity.ok(userById);
     }
 
     @PostMapping()

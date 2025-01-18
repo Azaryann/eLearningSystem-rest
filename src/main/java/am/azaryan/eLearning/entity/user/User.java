@@ -31,6 +31,8 @@ public class User {
     @Email(message = "Email is invalid")
     private String email;
 
+    private boolean active = Boolean.FALSE;
+
     @Enumerated(EnumType.STRING)
     private UserType userType;
 }

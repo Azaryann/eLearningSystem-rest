@@ -1,6 +1,7 @@
 package am.azaryan.eLearning.endpoint;
 
 import am.azaryan.eLearning.dto.userMapper.CreateUserRequestDto;
+import am.azaryan.eLearning.dto.userMapper.ResponseDeleteUserDto;
 import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
 import am.azaryan.eLearning.exceptions.ErrorResponse;
 import am.azaryan.eLearning.response.Response;
@@ -41,10 +42,8 @@ public class UserEndpoint {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable int id) {
-        if (userService.deleteUserById(id)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<Response<ErrorResponse, ResponseDeleteUserDto>> delete(@PathVariable(name = "id") String id) {
+        Response<ErrorResponse, ResponseDeleteUserDto> responseDeleteUserDto = userService.delete(id);
+        return ResponseEntity.ok(responseDeleteUserDto);
     }
 }

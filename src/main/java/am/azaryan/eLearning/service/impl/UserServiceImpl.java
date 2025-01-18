@@ -1,5 +1,6 @@
 package am.azaryan.eLearning.service.impl;
 
+import am.azaryan.eLearning.dto.userMapper.ResponseDeleteUserDto;
 import am.azaryan.eLearning.exceptions.ErrorResponse;
 import am.azaryan.eLearning.exceptions.RecordNotFoundException;
 import am.azaryan.eLearning.mapper.UserMapper;
@@ -41,19 +42,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Response<ErrorResponse, ResponseDeleteUserDto> delete(String id) {
+        User user = userRepository.findById(Integer.valueOf(id)).orElseThrow(() -> new RecordNotFoundException("User is not found with id : " + id));
+        user.setActive(true);
+        User savedUser = userRepository.save(user);
+        return new Response<>(null,
+                new ResponseDeleteUserDto(savedUser.isActive()), ResponseDeleteUserDto.class.getSimpleName());
+    }
+
+    @Override
     public UserResponseDto saveUser(CreateUserRequestDto createUserRequestDto) {
         if (createUserRequestDto != null && userRepository.findUserByEmail(createUserRequestDto.getEmail()).isEmpty()) {
             return userMapper.userToUserResponse(userRepository.save(userMapper.userRequestToUser(createUserRequestDto)));
         }
         return null;
-    }
-
-    @Override
-    public boolean deleteUserById(int id) {
-        if (userRepository.findById(id).isPresent()) {
-            userRepository.deleteById(id);
-            return true;
-        }
-        return false;
     }
 }

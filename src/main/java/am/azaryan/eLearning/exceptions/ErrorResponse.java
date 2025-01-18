@@ -1,8 +1,13 @@
 package am.azaryan.eLearning.exceptions;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@Setter
 public class ErrorResponse {
 
     private String errorCode;
@@ -17,45 +22,5 @@ public class ErrorResponse {
         this.errorMessage = errorMessage;
         this.errorList = errorList;
         this.localDateTime = LocalDateTime.now();
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorStatus() {
-        return errorStatus;
-    }
-
-    public void setErrorStatus(String errorStatus) {
-        this.errorStatus = errorStatus;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    public List<String> getErrorList() {
-        return errorList;
-    }
-
-    public void setErrorList(List<String> errorList) {
-        this.errorList = errorList;
-    }
-
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
-    }
-
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
     }
 }

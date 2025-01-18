@@ -1,6 +1,6 @@
 package am.azaryan.eLearning.service;
 
-import am.azaryan.eLearning.dto.lessonMapper.LessonResponseDto;
+import am.azaryan.eLearning.dto.lessonMapper.LessonDto;
 import am.azaryan.eLearning.dto.lessonMapper.CreateLessonRequestDto;
 import am.azaryan.eLearning.dto.lessonMapper.UpdateLessonDto;
 
@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface LessonService {
 
-    List<LessonResponseDto> findAll();
+    List<LessonDto> findAll();
 
-    LessonResponseDto findById(int id);
+    LessonDto findById(int id);
 
-    LessonResponseDto editLesson(UpdateLessonDto updateLessonDto);
+    LessonDto editLesson(UpdateLessonDto updateLessonDto);
 
-    LessonResponseDto save(CreateLessonRequestDto createLessonRequestDto);
+    LessonDto save(CreateLessonRequestDto createLessonRequestDto);
 
     boolean deleteById(int id);
 }

@@ -1,14 +1,14 @@
 package am.azaryan.eLearning.dto;
 
-import am.azaryan.eLearning.dto.lessonMapper.LessonResponseDto;
+import am.azaryan.eLearning.dto.lessonMapper.LessonDto;
 import am.azaryan.eLearning.entity.lesson.Lesson;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface LessonMapper {
 
-    Lesson lessonToDto(LessonResponseDto lessonResponseDto);
+    Lesson lessonToDto(LessonDto lessonDto);
 
-    LessonResponseDto dtoToLesson(Lesson lesson);
+    LessonDto dtoToLesson(Lesson lesson);
 
 }

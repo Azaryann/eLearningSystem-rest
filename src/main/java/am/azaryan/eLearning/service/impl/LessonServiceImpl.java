@@ -1,7 +1,7 @@
 package am.azaryan.eLearning.service.impl;
 
 import am.azaryan.eLearning.mapper.LessonMapper;
-import am.azaryan.eLearning.dto.lessonMapper.LessonResponseDto;
+import am.azaryan.eLearning.dto.lessonMapper.LessonDto;
 import am.azaryan.eLearning.dto.lessonMapper.CreateLessonRequestDto;
 import am.azaryan.eLearning.dto.lessonMapper.UpdateLessonDto;
 import am.azaryan.eLearning.entity.lesson.Lesson;
@@ -29,22 +29,22 @@ public class LessonServiceImpl implements LessonService {
     private final UserRepository userRepository;
 
     @Override
-    public LessonResponseDto findById(int id) {
+    public LessonDto findById(int id) {
         return lessonRepository.findById(id).map(lessonMapper::createLessonResponseDto).orElse(null);
     }
 
     @Override
-    public List<LessonResponseDto> findAll() {
+    public List<LessonDto> findAll() {
         List<Lesson> lessons = lessonRepository.findAll();
-        List<LessonResponseDto> lessonResponseDto = new ArrayList<>();
+        List<LessonDto> lessonDto = new ArrayList<>();
         for (Lesson lesson : lessons) {
-            lessonResponseDto.add(lessonMapper.createLessonResponseDto(lesson));
+            lessonDto.add(lessonMapper.createLessonResponseDto(lesson));
         }
-        return lessonResponseDto;
+        return lessonDto;
     }
 
     @Override
-    public LessonResponseDto save(CreateLessonRequestDto createLessonRequestDto) {
+    public LessonDto save(CreateLessonRequestDto createLessonRequestDto) {
         Optional<User> userDb = userRepository.findById(createLessonRequestDto.getTeacherId());
         if (userDb.isPresent()) {
             User user = userDb.get();
@@ -56,7 +56,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public LessonResponseDto editLesson(UpdateLessonDto updateLessonDto) {
+    public LessonDto editLesson(UpdateLessonDto updateLessonDto) {
         if (lessonRepository.existsById(updateLessonDto.getId())) {
             return lessonMapper.createLessonResponseDto(lessonRepository.save(lessonMapper.updateLesson(updateLessonDto)));
         }

@@ -1,7 +1,7 @@
 package am.azaryan.eLearning.mapper;
 
 import am.azaryan.eLearning.dto.userMapper.CreateUserRequestDto;
-import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
+import am.azaryan.eLearning.dto.userMapper.UserDto;
 import am.azaryan.eLearning.entity.user.User;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +23,11 @@ public class UserMapper {
 
     }
 
-    public UserResponseDto userToUserResponse(User user) {
+    public UserDto userToUserResponse(User user) {
         if (user == null) {
             return null;
         }
-        return UserResponseDto.builder()
+        return UserDto.builder()
                 .name(user.getName())
                 .surname(user.getSurname())
                 .email(user.getEmail())

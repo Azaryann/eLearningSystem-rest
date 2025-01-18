@@ -1,6 +1,6 @@
 package am.azaryan.eLearning.dto.lessonMapper;
 
-import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
+import am.azaryan.eLearning.dto.userMapper.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LessonRegisterResponse {
 
-    private UserResponseDto student;
-    private LessonResponseDto lesson;
+    private UserDto student;
+    private LessonDto lesson;
 
 }

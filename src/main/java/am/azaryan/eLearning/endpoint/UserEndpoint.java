@@ -3,7 +3,7 @@ package am.azaryan.eLearning.endpoint;
 import am.azaryan.eLearning.dto.userMapper.CreateUserRequestDto;
 import am.azaryan.eLearning.dto.userMapper.ResponseDeleteUserDto;
 import am.azaryan.eLearning.dto.userMapper.UpdateUserDto;
-import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
+import am.azaryan.eLearning.dto.userMapper.UserDto;
 import am.azaryan.eLearning.exceptions.ErrorResponse;
 import am.azaryan.eLearning.response.Response;
 import am.azaryan.eLearning.service.UserService;
@@ -23,29 +23,29 @@ public class UserEndpoint {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<ErrorResponse,UserResponseDto>> getUserById(@PathVariable int id) {
-        Response<ErrorResponse,UserResponseDto> userById = userService.getUserById(id);
+    public ResponseEntity<Response<ErrorResponse, UserDto>> getUserById(@PathVariable int id) {
+        Response<ErrorResponse, UserDto> userById = userService.getUserById(id);
         return ResponseEntity.ok(userById);
     }
 
     @PostMapping()
-    public ResponseEntity<UserResponseDto> getUsers(@RequestBody CreateUserRequestDto createUserRequestDto) {
-        UserResponseDto userResponseDto = userService.saveUser(createUserRequestDto);
-        if (userResponseDto == null) {
+    public ResponseEntity<UserDto> getUsers(@RequestBody CreateUserRequestDto createUserRequestDto) {
+        UserDto userDto = userService.saveUser(createUserRequestDto);
+        if (userDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(userResponseDto);
+        return ResponseEntity.ok(userDto);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Response<ErrorResponse, UserResponseDto>> update(@PathVariable(name = "id") String id,
+    public ResponseEntity<Response<ErrorResponse, UserDto>> update(@PathVariable(name = "id") String id,
                                                                    @RequestBody UpdateUserDto updateUserDto) {
-        Response<ErrorResponse, UserResponseDto> userDtoResponse = userService.update(id, updateUserDto);
+        Response<ErrorResponse, UserDto> userDtoResponse = userService.update(id, updateUserDto);
         return ResponseEntity.ok(userDtoResponse);
     }
 

@@ -1,6 +1,6 @@
 package am.azaryan.eLearning.endpoint;
 
-import am.azaryan.eLearning.dto.lessonMapper.LessonResponseDto;
+import am.azaryan.eLearning.dto.lessonMapper.LessonDto;
 import am.azaryan.eLearning.dto.lessonMapper.CreateLessonRequestDto;
 import am.azaryan.eLearning.dto.lessonMapper.UpdateLessonDto;
 import am.azaryan.eLearning.service.LessonService;
@@ -21,13 +21,13 @@ public class LessonEndpoint {
     private final LessonService lessonService;
 
     @GetMapping()
-    public ResponseEntity<List<LessonResponseDto>> getLessons() {
+    public ResponseEntity<List<LessonDto>> getLessons() {
         return ResponseEntity.ok(lessonService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LessonResponseDto> getLessonById(@PathVariable int id) {
-        LessonResponseDto course = lessonService.findById(id);
+    public ResponseEntity<LessonDto> getLessonById(@PathVariable int id) {
+        LessonDto course = lessonService.findById(id);
         if (course != null) {
             return ResponseEntity.ok(course);
         }
@@ -35,25 +35,25 @@ public class LessonEndpoint {
     }
 
     @PostMapping()
-    public ResponseEntity<LessonResponseDto> addLesson(@Valid @RequestBody CreateLessonRequestDto lesson) {
-        LessonResponseDto lessonResponseDto = lessonService.save(lesson);
-        if (lessonResponseDto != null) {
-            return ResponseEntity.ok(lessonResponseDto);
+    public ResponseEntity<LessonDto> addLesson(@Valid @RequestBody CreateLessonRequestDto lesson) {
+        LessonDto lessonDto = lessonService.save(lesson);
+        if (lessonDto != null) {
+            return ResponseEntity.ok(lessonDto);
         }
         return ResponseEntity.badRequest().build();
     }
 
     @PatchMapping()
-    public ResponseEntity<LessonResponseDto> updateCourse(@RequestBody UpdateLessonDto lesson) {
-        LessonResponseDto lessonResponseDto = lessonService.editLesson(lesson);
-        if (lessonResponseDto != null) {
-            return ResponseEntity.ok(lessonResponseDto);
+    public ResponseEntity<LessonDto> updateCourse(@RequestBody UpdateLessonDto lesson) {
+        LessonDto lessonDto = lessonService.editLesson(lesson);
+        if (lessonDto != null) {
+            return ResponseEntity.ok(lessonDto);
         }
         return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<LessonResponseDto> deleteCourseById(@PathVariable int id) {
+    public ResponseEntity<LessonDto> deleteCourseById(@PathVariable int id) {
         if (lessonService.deleteById(id)) {
             return ResponseEntity.ok(lessonService.findById(id));
         }

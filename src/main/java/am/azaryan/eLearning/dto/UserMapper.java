@@ -1,14 +1,14 @@
 package am.azaryan.eLearning.dto;
 
-import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
+import am.azaryan.eLearning.dto.userMapper.UserDto;
 import am.azaryan.eLearning.entity.user.User;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface UserMapper {
 
-    User userToDto(UserResponseDto userResponseDto);
+    User userToDto(UserDto userDto);
 
-    UserResponseDto dtoToUser(User user);
+    UserDto dtoToUser(User user);
 
 }

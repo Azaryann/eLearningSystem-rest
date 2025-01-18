@@ -1,6 +1,6 @@
 package am.azaryan.eLearning.mapper;
 
-import am.azaryan.eLearning.dto.lessonMapper.LessonResponseDto;
+import am.azaryan.eLearning.dto.lessonMapper.LessonDto;
 import am.azaryan.eLearning.dto.lessonMapper.CreateLessonRequestDto;
 import am.azaryan.eLearning.dto.lessonMapper.UpdateLessonDto;
 import am.azaryan.eLearning.entity.lesson.Lesson;
@@ -26,11 +26,11 @@ public class LessonMapper {
                 .build();
     }
 
-    public LessonResponseDto createLessonResponseDto(Lesson lesson) {
+    public LessonDto createLessonResponseDto(Lesson lesson) {
         if (lesson == null) {
             return null;
         }
-        return LessonResponseDto.builder()
+        return LessonDto.builder()
                 .title(lesson.getTitle())
                 .description(lesson.getDescription())
                 .teacher(userMapper.userToUserResponse(lesson.getTeacher()))

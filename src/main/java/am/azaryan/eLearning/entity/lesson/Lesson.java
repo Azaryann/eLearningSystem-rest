@@ -19,7 +19,6 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message = "Title is mandatory")
     private String title;
 
     private String description;

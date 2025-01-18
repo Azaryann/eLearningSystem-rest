@@ -2,6 +2,7 @@ package am.azaryan.eLearning.service;
 
 import am.azaryan.eLearning.dto.userMapper.CreateUserRequestDto;
 import am.azaryan.eLearning.dto.userMapper.ResponseDeleteUserDto;
+import am.azaryan.eLearning.dto.userMapper.UpdateUserDto;
 import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
 import am.azaryan.eLearning.exceptions.ErrorResponse;
 import am.azaryan.eLearning.response.Response;
@@ -17,4 +18,6 @@ public interface UserService {
     List<UserResponseDto> getAllUsers();
 
     Response<ErrorResponse, ResponseDeleteUserDto> delete(String id);
+
+    Response<ErrorResponse, UserResponseDto> update(String id, UpdateUserDto userDto);
 }

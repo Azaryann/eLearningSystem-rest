@@ -2,6 +2,7 @@ package am.azaryan.eLearning.endpoint;
 
 import am.azaryan.eLearning.dto.userMapper.CreateUserRequestDto;
 import am.azaryan.eLearning.dto.userMapper.ResponseDeleteUserDto;
+import am.azaryan.eLearning.dto.userMapper.UpdateUserDto;
 import am.azaryan.eLearning.dto.userMapper.UserResponseDto;
 import am.azaryan.eLearning.exceptions.ErrorResponse;
 import am.azaryan.eLearning.response.Response;
@@ -39,6 +40,13 @@ public class UserEndpoint {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.ok(userResponseDto);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Response<ErrorResponse, UserResponseDto>> update(@PathVariable(name = "id") String id,
+                                                                   @RequestBody UpdateUserDto updateUserDto) {
+        Response<ErrorResponse, UserResponseDto> userDtoResponse = userService.update(id, updateUserDto);
+        return ResponseEntity.ok(userDtoResponse);
     }
 
     @DeleteMapping("/{id}")

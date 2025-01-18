@@ -1,6 +1,7 @@
 package am.azaryan.eLearning.service.impl;
 
 import am.azaryan.eLearning.dto.userMapper.ResponseDeleteUserDto;
+import am.azaryan.eLearning.dto.userMapper.UpdateUserDto;
 import am.azaryan.eLearning.exceptions.ErrorResponse;
 import am.azaryan.eLearning.exceptions.RecordNotFoundException;
 import am.azaryan.eLearning.mapper.UserMapper;
@@ -51,10 +52,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Response<ErrorResponse, UserResponseDto> update(String id, UpdateUserDto updateUserDto) {
+        User user = userRepository.findById(Integer.valueOf(id)).orElseThrow(() -> new RecordNotFoundException("User is not found with id : " + id));
+        User updatedUser = updateUserFields(updateUserDto, user);
+        User save = userRepository.save(updatedUser);
+        return new Response<>(null, userMapper.userToUserResponse(save), UserResponseDto.class.getSimpleName());
+    }
+
+    @Override
     public UserResponseDto saveUser(CreateUserRequestDto createUserRequestDto) {
         if (createUserRequestDto != null && userRepository.findUserByEmail(createUserRequestDto.getEmail()).isEmpty()) {
             return userMapper.userToUserResponse(userRepository.save(userMapper.userRequestToUser(createUserRequestDto)));
         }
         return null;
+    }
+
+    private User updateUserFields(UpdateUserDto updateUserDto, User user) {
+        user.setUserType(updateUserDto.getUserType());
+        user.setActive(updateUserDto.getActive());
+        return user;
     }
 }

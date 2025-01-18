@@ -1,5 +1,8 @@
 package am.azaryan.eLearning.service.impl;
 
+import am.azaryan.eLearning.dto.userMapper.UserDto;
+import am.azaryan.eLearning.exceptions.ErrorResponse;
+import am.azaryan.eLearning.exceptions.RecordNotFoundException;
 import am.azaryan.eLearning.mapper.LessonMapper;
 import am.azaryan.eLearning.dto.lessonMapper.LessonDto;
 import am.azaryan.eLearning.dto.lessonMapper.CreateLessonRequestDto;
@@ -9,6 +12,7 @@ import am.azaryan.eLearning.entity.user.User;
 import am.azaryan.eLearning.entity.user.UserType;
 import am.azaryan.eLearning.repository.LessonRepository;
 import am.azaryan.eLearning.repository.UserRepository;
+import am.azaryan.eLearning.response.Response;
 import am.azaryan.eLearning.service.LessonService;
 import lombok.RequiredArgsConstructor;
 
@@ -29,11 +33,6 @@ public class LessonServiceImpl implements LessonService {
     private final UserRepository userRepository;
 
     @Override
-    public LessonDto findById(int id) {
-        return lessonRepository.findById(id).map(lessonMapper::createLessonResponseDto).orElse(null);
-    }
-
-    @Override
     public List<LessonDto> findAll() {
         List<Lesson> lessons = lessonRepository.findAll();
         List<LessonDto> lessonDto = new ArrayList<>();
@@ -41,6 +40,12 @@ public class LessonServiceImpl implements LessonService {
             lessonDto.add(lessonMapper.createLessonResponseDto(lesson));
         }
         return lessonDto;
+    }
+
+    @Override
+    public Response<ErrorResponse, LessonDto> findById(int id) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("User is not found with id : " + id));
+        return new Response<>(null, lessonMapper.createLessonResponseDto(lesson), LessonDto.class.getSimpleName());
     }
 
     @Override

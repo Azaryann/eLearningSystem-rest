@@ -3,6 +3,9 @@ package am.azaryan.eLearning.endpoint;
 import am.azaryan.eLearning.dto.lessonMapper.LessonDto;
 import am.azaryan.eLearning.dto.lessonMapper.CreateLessonRequestDto;
 import am.azaryan.eLearning.dto.lessonMapper.UpdateLessonDto;
+import am.azaryan.eLearning.dto.userMapper.UserDto;
+import am.azaryan.eLearning.exceptions.ErrorResponse;
+import am.azaryan.eLearning.response.Response;
 import am.azaryan.eLearning.service.LessonService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +29,9 @@ public class LessonEndpoint {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LessonDto> getLessonById(@PathVariable int id) {
-        LessonDto course = lessonService.findById(id);
-        if (course != null) {
-            return ResponseEntity.ok(course);
-        }
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Response<ErrorResponse, LessonDto>> getLessonById(@PathVariable int id) {
+        Response<ErrorResponse, LessonDto> lessonById = lessonService.findById(id);
+        return ResponseEntity.ok(lessonById);
     }
 
     @PostMapping()
@@ -44,7 +44,7 @@ public class LessonEndpoint {
     }
 
     @PatchMapping()
-    public ResponseEntity<LessonDto> updateCourse(@RequestBody UpdateLessonDto lesson) {
+    public ResponseEntity<LessonDto> updateLesson(@RequestBody UpdateLessonDto lesson) {
         LessonDto lessonDto = lessonService.editLesson(lesson);
         if (lessonDto != null) {
             return ResponseEntity.ok(lessonDto);
@@ -53,9 +53,9 @@ public class LessonEndpoint {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<LessonDto> deleteCourseById(@PathVariable int id) {
+    public ResponseEntity<LessonDto> deleteLessonById(@PathVariable int id) {
         if (lessonService.deleteById(id)) {
-            return ResponseEntity.ok(lessonService.findById(id));
+            return ResponseEntity.ok(lessonService.findById(id).getSuccessObject());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

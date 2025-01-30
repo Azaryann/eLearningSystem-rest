@@ -4,10 +4,12 @@ import am.azaryan.eLearning.dto.userMapper.CreateUserRequestDto;
 import am.azaryan.eLearning.dto.userMapper.ResponseDeleteUserDto;
 import am.azaryan.eLearning.dto.userMapper.UpdateUserDto;
 import am.azaryan.eLearning.dto.userMapper.UserDto;
+import am.azaryan.eLearning.entity.user.User;
 import am.azaryan.eLearning.exceptions.ErrorResponse;
 import am.azaryan.eLearning.response.Response;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -20,4 +22,6 @@ public interface UserService {
     Response<ErrorResponse, ResponseDeleteUserDto> delete(String id);
 
     Response<ErrorResponse, UserDto> update(String id, UpdateUserDto userDto);
+
+    Optional<User> findByEmail(String email);
 }

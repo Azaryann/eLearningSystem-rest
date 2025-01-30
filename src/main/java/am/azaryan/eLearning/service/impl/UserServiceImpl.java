@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +58,11 @@ public class UserServiceImpl implements UserService {
         User updatedUser = updateUserFields(updateUserDto, user);
         User save = userRepository.save(updatedUser);
         return new Response<>(null, userMapper.userToUserResponse(save), UserDto.class.getSimpleName());
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
